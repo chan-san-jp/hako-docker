@@ -16,3 +16,7 @@ RUN gem install hako -v 2.13.0 \
 
 WORKDIR $APP_ROOT
 
+COPY . .
+
+ENV PATH /usr/src/app/bin:$PATH
+

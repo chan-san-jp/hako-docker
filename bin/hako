@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+
+require 'aws-sdk-s3'
+
+tag = ''
+if ENV['S3_HASH_URI'] && !ARGV.find{|a| a.index('--tag') == 0}
+  uri = URI.parse(ENV['S3_HASH_URI'])
+  tag = " --tag=#{Aws::S3::Client.new.get_object(bucket: uri.host, key: uri.path[1, uri.path.length]).body.read.chomp}"
+end
+
+`/usr/local/bundle/bin/hako #{ARGV.join}#{tag}` 
+
